@@ -14,6 +14,14 @@ function Projects(){return h('section',{className:'projects',id:'projects','aria
  h('article',{className:'project project-four'},h('div',{className:'project-heading'},h('span',{className:'project-number'},'04'),h('p',null,latin)),h('div',{className:'empty-space','aria-hidden':true}),h('h3',null,'TEMPUS',h('br'),'FUTURUM'),h('small',null,'Ut enim / Ad minim'))
  ));}
 
+
+function Footer(){return h('footer',{className:'site-footer',id:'footer'},
+ h('p',{className:'footer-copyright'},'© Harvard MDE Undercurrents 2026'),
+ h('nav',{'aria-label':'Footer navigation',className:'footer-navigation'},
+  h('a',{href:'#home'},'Us'),
+  h('a',{href:'./who-we-are-talking-to.html'},'Network'),
+  h('a',{href:'#projects'},'Portfolio')));}
+
 function App(){
  const [progress,setProgress]=useState(0),[open,setOpen]=useState(false);
  useEffect(()=>{let frame;const update=()=>{cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>setProgress(Math.min(1,Math.max(0,window.scrollY/(window.innerHeight*.95)))))};update();window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);return()=>{cancelAnimationFrame(frame);window.removeEventListener('scroll',update);window.removeEventListener('resize',update)}},[]);
@@ -26,6 +34,6 @@ function App(){
  h('h1',{className:'title','aria-label':'UNDERCURRENTS'},h('span',{'aria-hidden':true,className:'top',style:{transform:`translate(${-progress*7}vw,${-progress*22}vh) rotate(${-progress*2}deg)`}},'UNDERCURRENTS'),h('span',{'aria-hidden':true,className:'bottom',style:{transform:`translate(${progress*7}vw,${progress*22}vh) rotate(${progress*2}deg)`}},'UNDERCURRENTS')),
  h('div',{className:'landing-note'},h(Handwriting)),
  h('div',{className:'hero-footer'},h('span',null,'SUS — undercurrents'),h('span',{className:'scroll-cue'},'Scroll to unfold',h('b',{'aria-hidden':true},'↓'))))),
- h(Projects)));
+ h(Projects)),h(Footer));
 }
 createRoot(document.getElementById('root')).render(h(App));
