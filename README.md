@@ -13,3 +13,7 @@ Every page loads `assets/site-header.css` and `assets/site-header.js`, which inj
 ## Project filters
 
 Topics and per-project tags live at the top of the `Projects` section in `app.js` (`topics` and `projects[].topics`).
+
+## Blog 3 — The Annual Bet
+
+`Blog3.html` is a scrolling map story (text on the left drives a sticky Leaflet map on the right, the same pattern as the `nuclear_ai_map` story). All text, map stops, places and risk zones live in `Blog3/story.js` (`CHAPTERS`, `PLACES`, `ZONES`); styling is in `Blog3/story.css`. Leaflet and the Esri base map load from the web.

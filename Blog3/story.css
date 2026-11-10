@@ -1,0 +1,140 @@
+/* Blog 03 — The Annual Bet. Scrolling map story in the Undercurrents house style:
+   white paper, black ink, Inter, tight display type, uppercase letter-spaced labels. */
+:root{
+ --paper:#fff;--ink:#000;--ink-2:#171815;--muted:#6b6b66;--rule:#0000002e;--soft:#00000014;
+ --head:75px;--text-w:min(520px,42vw);
+ color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink-2);font-family:Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-underline-offset:4px}
+a:focus-visible{outline:2px solid #000;outline-offset:4px}
+
+/* ---------- cover ---------- */
+.cover{min-height:100svh;padding:calc(var(--head) + 6vh) 4% 40px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;border-bottom:1px solid var(--rule)}
+.cover-kicker{position:absolute;top:calc(var(--head) + 40px);left:4%;right:4%;display:flex;gap:28px;margin:0;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.cover-kicker span:first-child{font-size:36px;letter-spacing:-.06em;line-height:.8}
+.cover-kicker time{margin-left:auto}
+.cover h1{margin:0;font-size:clamp(64px,15vw,250px);line-height:.86;letter-spacing:-.075em;font-weight:400;color:#000}
+.cover-sub{max-width:520px;margin:42px 0 0 auto;font-size:clamp(17px,1.5vw,22px);line-height:1.35;letter-spacing:-.02em;color:#000}
+.cover-cue{display:flex;gap:24px;align-items:center;margin-top:56px;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.cover-cue b{font-size:22px;font-weight:400}
+
+/* ---------- story grid: text left, sticky map right ---------- */
+.story{display:grid;grid-template-columns:var(--text-w) 1fr;align-items:start}
+.text{position:relative;z-index:2;background:var(--paper);border-right:1px solid var(--rule);padding:0 40px 20vh 4vw}
+.stage{position:sticky;top:var(--head);height:calc(100svh - var(--head));overflow:hidden;background:#f3f3f1}
+#map{position:absolute;inset:0;background:#f3f3f1}
+
+.chapter{padding:14vh 0 6vh;border-top:1px solid var(--rule)}
+.chapter:first-child{border-top:0}
+.ch-head{display:flex;justify-content:space-between;align-items:start;gap:24px;margin-bottom:6vh}
+.ch-head h2{margin:0;font-size:clamp(34px,3.6vw,58px);line-height:.98;letter-spacing:-.065em;font-weight:400;color:#000}
+.ch-num{font-size:36px;letter-spacing:-.06em;line-height:1;color:#000}
+.ch-tag{display:block;margin-top:14px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+.step{min-height:68vh;padding:4vh 0;opacity:.25;transition:opacity .4s}
+.step.is-active{opacity:1}
+.step p{font-size:16px;line-height:1.62;margin:0 0 16px;max-width:42ch}
+.step p.lead{font-size:clamp(20px,1.7vw,24px);line-height:1.35;letter-spacing:-.025em;color:#000}
+.step b{font-weight:600;color:#000}
+.step small,.note{display:block;font-size:10px;line-height:1.55;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:18px}
+.step a{font-weight:500}
+
+/* Stat pull: large figure + label, same voice as the project numbers on the home page. */
+.stat{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;align-items:end;margin:28px 0;padding:18px 0;border-top:1px solid #000;border-bottom:1px solid var(--rule)}
+.stat strong{font-size:clamp(44px,4.6vw,72px);line-height:.9;letter-spacing:-.07em;font-weight:400;color:#000}
+.stat span{font-size:11px;line-height:1.45;letter-spacing:.04em;text-transform:uppercase;max-width:26ch}
+
+/* Hub list */
+.hubs{list-style:none;margin:22px 0;padding:0;border-top:1px solid #000}
+.hubs li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--rule);font-size:13px;line-height:1.4}
+.hubs li b{font-weight:500;min-width:110px}
+.hubs li span{color:var(--muted);text-align:right}
+
+/* Renewal calendar: 12 months, the four big reinsurance dates marked. */
+.calendar{margin:28px 0 8px}
+.cal-row{display:grid;grid-template-columns:repeat(12,1fr);border:1px solid #000}
+.cal-row span{position:relative;height:46px;border-right:1px solid var(--rule);font-size:9px;letter-spacing:.06em;text-transform:uppercase;padding:5px 0 0 4px}
+.cal-row span:last-child{border-right:0}
+.cal-row span.on{background:#000;color:#fff}
+.cal-key{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;margin:12px 0 0;padding:0;list-style:none;font-size:11px;line-height:1.4}
+.cal-key b{display:inline-block;min-width:44px}
+
+/* Time-horizon bars: a one-year policy against the life of what it covers. */
+.horizon{margin:28px 0 8px;display:grid;gap:10px}
+.horizon div{display:grid;grid-template-columns:116px 1fr;align-items:center;gap:12px;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+.horizon i{display:block;height:12px;background:repeating-linear-gradient(90deg,#000 0 calc(100% / var(--n) - 2px),transparent calc(100% / var(--n) - 2px) calc(100% / var(--n)));width:calc(var(--w) * 1%)}
+.horizon .one i{background:#000}
+
+/* Three-part hail breakdown */
+.targets{list-style:none;margin:24px 0;padding:0;counter-reset:t}
+.targets li{counter-increment:t;display:grid;grid-template-columns:34px 1fr;gap:4px 12px;padding:12px 0;border-top:1px solid var(--rule);font-size:14px;line-height:1.5}
+.targets li::before{content:'0' counter(t);font-size:20px;letter-spacing:-.06em;line-height:1;color:#000}
+
+.sub{display:flex;align-items:baseline;gap:14px;margin:0 0 22px;padding-bottom:12px;border-bottom:1px solid #000;font-size:clamp(26px,2.4vw,38px);line-height:1;letter-spacing:-.06em;font-weight:400;color:#000}
+.sub span{font-size:14px;letter-spacing:.02em}
+
+/* ---------- map chrome ---------- */
+.hud{position:absolute;top:18px;left:18px;z-index:500;display:flex;align-items:baseline;gap:14px;padding:10px 14px;background:#fff;border:2px solid #000;max-width:calc(100% - 36px)}
+.hud-num{font-size:26px;letter-spacing:-.06em;line-height:1;color:#000}
+.hud-title{font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.legend{position:absolute;left:18px;bottom:18px;z-index:500;display:flex;align-items:center;gap:8px;padding:8px 12px;background:#ffffffe6;border:1px solid var(--rule);font-size:9px;letter-spacing:.08em;text-transform:uppercase}
+.legend-dot{width:8px;height:8px;border-radius:50%;background:#000;display:inline-block}
+.legend-zone{width:16px;height:10px;border:1px dashed #000;background:#00000014;border-radius:50%;display:inline-block;margin-left:10px}
+.map-fallback{position:absolute;inset:auto 18px 70px;z-index:500;margin:0;font-size:12px;padding:12px;background:#fff;border:1px solid var(--rule)}
+
+.leaflet-container{font-family:Inter,Arial,sans-serif;background:#f3f3f1}
+.leaflet-tile-pane{filter:grayscale(1) contrast(1.04)}
+.leaflet-control-zoom{border:1px solid #000!important;border-radius:0!important}
+.leaflet-control-zoom a{border-radius:0!important;color:#000!important}
+.leaflet-control-attribution{font-size:9px}
+.place-label.leaflet-tooltip,.zone-label.leaflet-tooltip{background:transparent;border:0;box-shadow:none;padding:0;color:#000;font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.place-label.leaflet-tooltip::before,.zone-label.leaflet-tooltip::before{display:none}
+.place-label.leaflet-tooltip{text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 3px #fff}
+.place-label--left.leaflet-tooltip{text-align:right}
+.place-label--top.leaflet-tooltip,.place-label--bottom.leaflet-tooltip{text-align:center}
+.place-label em{display:block;font-style:normal;font-weight:400;letter-spacing:.04em;text-transform:none;color:var(--muted);font-size:10px}
+.zone-label.leaflet-tooltip{font-size:12px;letter-spacing:.16em;color:#000;opacity:.7;text-shadow:0 0 4px #f3f3f1,0 0 4px #f3f3f1}
+
+/* ---------- colophon + footer (footer matches the home page) ---------- */
+.colophon{padding:12vh 4% 14vh;border-top:1px solid #000;display:grid;grid-template-columns:var(--text-w) 1fr;gap:0 40px;font-size:13px;line-height:1.6}
+.colophon h2{grid-row:span 4;margin:0;font-size:11px;font-weight:400;letter-spacing:.06em;text-transform:uppercase}
+.colophon p,.colophon ul{margin:0 0 18px;max-width:72ch}
+.colophon ul{padding-left:18px}
+.colophon li{margin-bottom:8px}
+
+.site-footer{position:relative;isolation:isolate;min-height:640px;height:75svh;max-height:1000px;padding:clamp(90px,14vh,170px) 9.5% 100px;display:flex;justify-content:space-between;align-items:flex-start;gap:50px;color:#fff;background:#16272c;overflow:hidden}
+.site-footer::before{content:'';position:absolute;inset:0;z-index:-1;background:url('../assets/footer-city.jpg') center 55%/cover no-repeat;filter:brightness(.48) saturate(.65)}
+.footer-copyright{margin:0;font-size:12px;letter-spacing:.03em;line-height:1.8}
+.footer-navigation{display:flex;flex-direction:column;align-items:flex-start;gap:36px;min-width:145px}
+.footer-navigation a{color:#fff;text-transform:uppercase;letter-spacing:.17em;font-size:17px;font-weight:500;line-height:1.6;text-decoration:none}
+.footer-navigation a:hover{text-decoration:underline;text-underline-offset:6px}
+.footer-navigation a:focus-visible{outline:2px solid #fff;outline-offset:8px}
+
+/* ---------- small screens: map pinned on top, text scrolls under it ---------- */
+@media(max-width:850px){
+ :root{--head:68px}
+ .story{display:flex;flex-direction:column}
+ .stage{order:-1;width:100%;height:44svh;z-index:3;border-bottom:1px solid #000}
+ .text{border-right:0;padding:0 22px 20vh}
+ .chapter{padding:10vh 0 4vh}
+ .step{min-height:60vh}
+ .hud{top:10px;left:10px;padding:7px 10px}
+ .hud-num{font-size:20px}
+ .legend{display:none}
+ .colophon{grid-template-columns:1fr;padding:10vh 22px}
+ .colophon h2{grid-row:auto;margin-bottom:18px}
+}
+@media(max-width:650px){
+ .cover{padding:calc(var(--head) + 4vh) 22px 32px}
+ .cover-kicker{left:22px;right:22px;gap:16px;flex-wrap:wrap}
+ .cover-sub{margin-left:0}
+ .cal-key{grid-template-columns:1fr}
+ .horizon div{grid-template-columns:96px 1fr}
+ .site-footer{min-height:560px;padding:76px 7% 80px;gap:60px;flex-direction:column}
+ .footer-navigation{align-self:flex-end;min-width:130px;gap:30px}
+ .footer-navigation a{font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.step{transition:none}}
