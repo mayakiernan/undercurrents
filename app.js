@@ -20,7 +20,8 @@ function Footer(){return h('footer',{className:'site-footer',id:'footer'},
  h('nav',{'aria-label':'Footer navigation',className:'footer-navigation'},
   h('a',{href:'#home'},'Us'),
   h('a',{href:'./who-we-are-talking-to.html'},'Network'),
-  h('a',{href:'#projects'},'Portfolio')));}
+  h('a',{href:'#projects'},'Portfolio'),
+  h('a',{href:'./Blog2.html'},'Blog2')));}
 
 function App(){
  const [progress,setProgress]=useState(0),[open,setOpen]=useState(false);
@@ -28,7 +29,7 @@ function App(){
  useEffect(()=>{document.body.style.overflow=open?'hidden':'';const close=e=>{if(e.key==='Escape')setOpen(false)};window.addEventListener('keydown',close);return()=>window.removeEventListener('keydown',close)},[open]);
  return h(React.Fragment,null,
  h('header',null,h('a',{href:'#',className:'logo','aria-label':'UC home'},'UC'),h('button',{className:'menu-button'+(open?' active':''),'aria-label':open?'Close menu':'Open menu','aria-expanded':open,'aria-controls':'navigation',onClick:()=>setOpen(!open)},...[1,2,3].map(i=>h('span',{key:i})))),
- open&&h('nav',{id:'navigation',className:'overlay','aria-label':'Main navigation'},h('a',{href:'#home',onClick:()=>setOpen(false)},'UNDERCURRENTS'),h('a',{href:'#projects',onClick:()=>setOpen(false)},'PROJECTS'),h('small',null,'SUS / undercurrents')),
+ open&&h('nav',{id:'navigation',className:'overlay','aria-label':'Main navigation'},h('a',{href:'#home',onClick:()=>setOpen(false)},'UNDERCURRENTS'),h('a',{href:'#projects',onClick:()=>setOpen(false)},'PROJECTS'),h('a',{href:'./Blog2.html',onClick:()=>setOpen(false)},'BLOG2'),h('small',null,'SUS / undercurrents')),
  h('main',null,h('section',{className:'scroll-stage',id:'home'},h('div',{className:'hero',style:{'--progress':progress,'--reveal':Math.min(1,Math.max(0,(progress-.12)*3))}},
  h('video',{className:'hero-video',src:'./desert.mp4',autoPlay:true,muted:true,loop:true,playsInline:true,preload:'auto','aria-hidden':true}),h('div',{className:'video-wash','aria-hidden':true}),
  h('h1',{className:'title','aria-label':'UNDERCURRENTS'},h('span',{'aria-hidden':true,className:'top',style:{transform:`translate(${-progress*7}vw,${-progress*22}vh) rotate(${-progress*2}deg)`}},'UNDERCURRENTS'),h('span',{'aria-hidden':true,className:'bottom',style:{transform:`translate(${progress*7}vw,${progress*22}vh) rotate(${progress*2}deg)`}},'UNDERCURRENTS')),
@@ -37,3 +38,4 @@ function App(){
  h(Projects)),h(Footer));
 }
 createRoot(document.getElementById('root')).render(h(App));
+
