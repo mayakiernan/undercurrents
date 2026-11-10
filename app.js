@@ -9,7 +9,7 @@ function Projects(){return h('section',{className:'projects',id:'projects','aria
  h('div',{className:'projects-label'},h('h2',{id:'projects-title'},'Selected projects'),h('span',null,'01 — 04')),
  h('div',{className:'project-grid'},
  h('article',{className:'project project-grown'},h('div',{className:'project-heading'},h('h3',null,'GROWN',h('br'),'TO DIE'),h('span',{className:'project-number'},'01')),h('img',{className:'cotton-image',src:'./cotton.png',alt:'Black line drawing of a cotton stem'}),h('p',null,'If you were told there was a 4% chance of survival you would be worried. But in some Texas counties that’s becoming the norm for entire fields of crops. An analysis of Texas cotton and an insurance system unincentivizing adaptation.'),h('small',null,'Research / Texas cotton')),
- h('article',{className:'project project-two'},h('div',{className:'project-heading'},h('p',null,latin),h('span',{className:'project-number'},'02')),h('div',{className:'empty-space','aria-hidden':true}),h('h3',null,'TERRA',h('br'),'INCOGNITA'),h('small',null,'Lorem ipsum / Dolor sit')),
+ h('a',{className:'project project-two project-built-in',href:'./Blog2.html#blog-top','aria-label':'Blog 2: Built In — resilience and material choice'},h('div',{className:'project-heading'},h('p',null,'Can you make resilience part of the renovation, not the reason for it? And if so, who is the stakeholder you need to get on board?'),h('span',{className:'project-number'},'02')),h('img',{className:'roof-card-image',src:'./Blog2/assets/slate-roof-hero.webp',alt:'Slate roofing tiles with loose overlapping slate samples',loading:'lazy'}),h('h3',null,'BUILT IN'),h('small',null,'RESILIENCE / MATERIAL CHOICE')),
  h('article',{className:'project project-three'},h('h3',null,'FORMA',h('br'),'ET MATERIA'),h('div',{className:'empty-space','aria-hidden':true}),h('div',{className:'project-heading'},h('p',null,latin),h('span',{className:'project-number'},'03')),h('small',null,'Consectetur / Adipiscing')),
  h('article',{className:'project project-four'},h('div',{className:'project-heading'},h('span',{className:'project-number'},'04'),h('p',null,latin)),h('div',{className:'empty-space','aria-hidden':true}),h('h3',null,'TEMPUS',h('br'),'FUTURUM'),h('small',null,'Ut enim / Ad minim'))
  ));}
@@ -20,22 +20,30 @@ function Footer(){return h('footer',{className:'site-footer',id:'footer'},
  h('nav',{'aria-label':'Footer navigation',className:'footer-navigation'},
   h('a',{href:'#home'},'Us'),
   h('a',{href:'./who-we-are-talking-to.html'},'Network'),
-  h('a',{href:'#projects'},'Portfolio'),
-  h('a',{href:'./Blog2.html'},'Blog2')));}
+  h('a',{href:'#projects'},'Portfolio')));}
 
 function App(){
- const [progress,setProgress]=useState(0),[open,setOpen]=useState(false);
- useEffect(()=>{let frame;const update=()=>{cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>setProgress(Math.min(1,Math.max(0,window.scrollY/(window.innerHeight*.95)))))};update();window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);return()=>{cancelAnimationFrame(frame);window.removeEventListener('scroll',update);window.removeEventListener('resize',update)}},[]);
+ useEffect(()=>{if(location.hash==='#projects'){requestAnimationFrame(()=>document.getElementById('projects')?.scrollIntoView({behavior:'instant',block:'start'}))}},[]);
+ const [progress,setProgress]=useState(0),[open,setOpen]=useState(false),[solidHeader,setSolidHeader]=useState(false);
+ useEffect(()=>{let frame;const update=()=>{cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{setProgress(Math.min(1,Math.max(0,window.scrollY/(window.innerHeight*2.85))));const hero=document.querySelector('.scroll-stage'),footer=document.querySelector('.site-footer');const headerBottom=76;setSolidHeader(!!hero&&hero.getBoundingClientRect().bottom<=headerBottom&&(!footer||footer.getBoundingClientRect().top>headerBottom))})};update();window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);return()=>{cancelAnimationFrame(frame);window.removeEventListener('scroll',update);window.removeEventListener('resize',update)}},[]);
  useEffect(()=>{document.body.style.overflow=open?'hidden':'';const close=e=>{if(e.key==='Escape')setOpen(false)};window.addEventListener('keydown',close);return()=>window.removeEventListener('keydown',close)},[open]);
  return h(React.Fragment,null,
- h('header',null,h('a',{href:'#',className:'logo','aria-label':'UC home'},'UC'),h('button',{className:'menu-button'+(open?' active':''),'aria-label':open?'Close menu':'Open menu','aria-expanded':open,'aria-controls':'navigation',onClick:()=>setOpen(!open)},...[1,2,3].map(i=>h('span',{key:i})))),
- open&&h('nav',{id:'navigation',className:'overlay','aria-label':'Main navigation'},h('a',{href:'#home',onClick:()=>setOpen(false)},'UNDERCURRENTS'),h('a',{href:'#projects',onClick:()=>setOpen(false)},'PROJECTS'),h('a',{href:'./Blog2.html',onClick:()=>setOpen(false)},'BLOG2'),h('small',null,'SUS / undercurrents')),
+ h('header',{className:solidHeader?'page-header-solid':''},h('a',{href:'#',className:'logo','aria-label':'UC home'},'UC'),h('button',{className:'menu-button'+(open?' active':''),'aria-label':open?'Close menu':'Open menu','aria-expanded':open,'aria-controls':'navigation',onClick:()=>setOpen(!open)},...[1,2,3].map(i=>h('span',{key:i})))),
+ open&&h('nav',{id:'navigation',className:'overlay','aria-label':'Main navigation'},h('a',{href:'#home',onClick:()=>setOpen(false)},'UNDERCURRENTS'),h('a',{href:'#projects',onClick:()=>setOpen(false)},'PROJECTS'),h('small',null,'SUS / undercurrents')),
  h('main',null,h('section',{className:'scroll-stage',id:'home'},h('div',{className:'hero',style:{'--progress':progress,'--reveal':Math.min(1,Math.max(0,(progress-.12)*3))}},
  h('video',{className:'hero-video',src:'./desert.mp4',autoPlay:true,muted:true,loop:true,playsInline:true,preload:'auto','aria-hidden':true}),h('div',{className:'video-wash','aria-hidden':true}),
- h('h1',{className:'title','aria-label':'UNDERCURRENTS'},h('span',{'aria-hidden':true,className:'top',style:{transform:`translate(${-progress*7}vw,${-progress*22}vh) rotate(${-progress*2}deg)`}},'UNDERCURRENTS'),h('span',{'aria-hidden':true,className:'bottom',style:{transform:`translate(${progress*7}vw,${progress*22}vh) rotate(${progress*2}deg)`}},'UNDERCURRENTS')),
- h('div',{className:'landing-note'},h(Handwriting)),
- h('div',{className:'hero-footer'},h('span',null,'SUS — undercurrents'),h('span',{className:'scroll-cue'},'Scroll to unfold',h('b',{'aria-hidden':true},'↓'))))),
+ h('svg',{width:0,height:0,'aria-hidden':true,style:{position:'absolute'}},
+ h('defs',null,h('filter',{id:'title-smoke',x:'-50%',y:'-100%',width:'200%',height:'300%',colorInterpolationFilters:'sRGB'},
+ h('feTurbulence',{type:'fractalNoise',baseFrequency:'.018 .035',numOctaves:2,seed:12,result:'noise'}),
+ h('feDisplacementMap',{in:'SourceGraphic',in2:'noise',scale:progress*145,xChannelSelector:'R',yChannelSelector:'G'}),
+ h('feGaussianBlur',{stdDeviation:progress*10})))),
+ h('h1',{className:'title smoke-title','aria-label':'UNDERCURRENTS'},
+ h('span',{className:'smoke-solid','aria-hidden':true},...Array.from('UNDERCURRENTS').map((letter,i)=>{
+ const t=Math.min(1,Math.max(0,(progress-.035-(i%4)*.018)/.60));
+ return h('span',{key:i,className:'smoke-letter',style:{opacity:Math.pow(1-t,1.8),filter:`blur(${t*t*17}px)`,transform:`translate(${Math.sin(i*2.3)*t*18}px,${-t*t*(45+(i%3)*22)}px) scale(${1+t*.12})`}},letter)})),
+ h('span',{className:'smoke-vapor','aria-hidden':true,style:{opacity:Math.sin(Math.min(1,progress/.70)*Math.PI)*.38,transform:`translate(${progress*24}px,${-progress*115}px) scale(${1+progress*.08})`}},'UNDERCURRENTS')),
+ h('div',{className:'landing-note',style:{opacity:Math.pow(1-Math.min(1,Math.max(0,(progress-.06)/.57)),1.5),transform:`translateY(${-progress*22}px)`,filter:`blur(${progress*3}px)`}},h(Handwriting)),
+ h('div',{className:'hero-footer'},h('span',null,'UC - STUDIO'),h('span',{className:'scroll-cue'},'Scroll to explore',h('b',{'aria-hidden':true},'↓'))))),
  h(Projects)),h(Footer));
 }
 createRoot(document.getElementById('root')).render(h(App));
-

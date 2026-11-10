@@ -56,4 +56,29 @@ header{mix-blend-mode:normal;color:#000}
 .landing-note{font-family:Helvetica,'Helvetica Neue',Arial,sans-serif;font-style:normal;font-weight:400;font-size:clamp(24px,3.2vw,54px);letter-spacing:-.025em;line-height:1.15;transform:none}
 .landing-note .hand-letter{display:inline;animation:none;transform:none;opacity:1}
 @media(max-width:600px){.landing-note{font-size:6vw}}
-</style></head><body><div id="root"></div><script type="module" src="./app.js?v=footer-editorial-2"></script></body></html>
+
+.smoke-title{overflow:visible}
+.title .smoke-solid{display:block;white-space:nowrap}
+.title .smoke-letter{display:inline-block;will-change:transform,opacity,filter}
+.title .smoke-vapor{position:absolute;inset:0;display:block;white-space:nowrap;filter:url(#title-smoke);pointer-events:none;will-change:transform,opacity}
+@media(prefers-reduced-motion:reduce){.title .smoke-letter{transform:none!important;filter:none!important}.title .smoke-vapor{display:none}}
+
+/* Three times the scroll distance for the title and subtitle fade. */
+.scroll-stage{height:430svh}
+
+/* White editorial banner over sections without full-bleed imagery. */
+header.page-header-solid{top:10px;left:10px;width:calc(100% - 20px);padding:16px 25px;min-height:65px;background:#fff;color:#171815;mix-blend-mode:normal;border:1px solid rgba(0,0,0,.18)}
+@media(max-width:600px){header.page-header-solid{padding:12px 18px;min-height:58px}}
+
+header.page-header-solid{border:2px solid #000;border-bottom:0}
+
+.project-built-in{display:flex;flex-direction:column;min-height:540px;text-decoration:none;color:#000}
+.project-built-in .project-heading{gap:18px}
+.project-built-in .project-heading p{font-size:12px;line-height:1.4;text-align:left;max-width:240px}
+.project-built-in .roof-card-image{display:block;width:100%;height:240px;object-fit:contain;margin:35px 0 38px}
+.project-built-in h3{font-size:clamp(36px,4.1vw,66px);white-space:nowrap;margin-top:auto}
+.project-built-in small{margin-top:28px;font-size:10px;letter-spacing:.07em}
+.project-built-in:focus-visible{outline:2px solid #000;outline-offset:6px}
+.project-built-in:hover h3{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1px}
+@media(max-width:560px){.project-built-in{min-height:540px}.project-built-in .project-heading p{font-size:13px}.project-built-in h3{font-size:52px}.project-built-in .roof-card-image{height:220px}}
+</style></head><body><div id="root"></div><script type="module" src="./app.js?v=blog2-card-restored-3"></script></body></html>
