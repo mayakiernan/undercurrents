@@ -1,0 +1,33 @@
+/* Shared Undercurrents header — used by every page via assets/site-header.js.
+   The fixed wrapper is opaque from the top of the viewport to the bottom edge of the
+   framed banner, so scrolled content can no longer show through the gap around it. */
+.uc-header{position:fixed;top:0;left:0;right:0;z-index:1000;padding:10px 10px 0;background:#fff;font-family:Inter,Arial,Helvetica,sans-serif;transition:background-color .2s}
+.uc-header__bar{position:relative;display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:65px;padding:12px 25px;background:#fff;color:#171815;border:2px solid #000;transition:background-color .2s,border-color .2s}
+.uc-header__logo{font-size:27px;font-weight:600;letter-spacing:-3px;line-height:1;transform:scaleX(1.1);transform-origin:left center;text-decoration:none;color:inherit}
+
+.uc-header__nav{display:flex;align-items:center;gap:6px}
+.uc-header__nav a{display:inline-block;padding:9px 14px;border:1px solid transparent;font-size:11px;font-weight:500;line-height:1;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:inherit;transition:border-color .15s,background-color .15s,color .15s}
+.uc-header__nav a:hover{border-color:currentColor}
+.uc-header__nav a[aria-current]{background:#000;border-color:#000;color:#fff}
+.uc-header a:focus-visible,.uc-header button:focus-visible{outline:2px solid currentColor;outline-offset:4px}
+
+.uc-header__menu{display:none;width:36px;height:32px;border:0;background:none;flex-direction:column;justify-content:center;gap:6px;padding:3px;color:inherit;cursor:pointer}
+.uc-header__menu span{display:block;width:30px;height:1px;background:currentColor;transition:transform .25s,opacity .25s}
+.uc-header__menu[aria-expanded="true"] span:first-child{transform:translateY(7px) rotate(45deg)}
+.uc-header__menu[aria-expanded="true"] span:nth-child(2){opacity:0}
+.uc-header__menu[aria-expanded="true"] span:last-child{transform:translateY(-7px) rotate(-45deg)}
+
+/* Home page: transparent over the hero video, framed banner once the hero is passed. */
+.uc-header--overlay{background:transparent}
+.uc-header--overlay .uc-header__bar{background:transparent;border-color:transparent;color:#000}
+.uc-header--overlay .uc-header__nav a[aria-current]{background:transparent;color:inherit;border-color:currentColor}
+
+@media(max-width:640px){
+ .uc-header__bar{min-height:58px;padding:12px 18px}
+ .uc-header__menu{display:flex}
+ .uc-header__nav{display:none;position:absolute;top:100%;left:-2px;right:-2px;flex-direction:column;align-items:stretch;gap:4px;padding:14px 16px 18px;background:#fff;color:#171815;border:2px solid #000;border-top:1px solid #0000002e}
+ .uc-header__nav.is-open{display:flex}
+ .uc-header__nav a{padding:13px 12px;font-size:13px;text-align:right}
+ .uc-header--overlay .uc-header__nav a[aria-current]{background:#000;color:#fff;border-color:#000}
+}
+@media(prefers-reduced-motion:reduce){.uc-header,.uc-header *{transition:none!important}}

@@ -5,31 +5,50 @@ const phrase='of the future to come';
 function Handwriting(){return h('span',{'aria-label':phrase},...Array.from(phrase).map((letter,i)=>h('span',{key:i,className:'hand-letter','aria-hidden':true,style:{'--i':i}},letter===' '?'\u00a0':letter)));}
 
 const latin='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
-function Projects(){return h('section',{className:'projects',id:'projects','aria-labelledby':'projects-title'},
- h('div',{className:'projects-label'},h('h2',{id:'projects-title'},'Selected projects'),h('span',null,'01 — 04')),
- h('div',{className:'project-grid'},
- h('article',{className:'project project-grown'},h('div',{className:'project-heading'},h('h3',null,'GROWN',h('br'),'TO DIE'),h('span',{className:'project-number'},'01')),h('img',{className:'cotton-image',src:'./cotton.png',alt:'Black line drawing of a cotton stem'}),h('p',null,'If you were told there was a 4% chance of survival you would be worried. But in some Texas counties that’s becoming the norm for entire fields of crops. An analysis of Texas cotton and an insurance system unincentivizing adaptation.'),h('small',null,'Research / Texas cotton')),
- h('a',{className:'project project-two project-built-in',href:'./Blog2.html#blog-top','aria-label':'Blog 2: Built In — resilience and material choice'},h('div',{className:'project-heading'},h('p',null,'Can you make resilience part of the renovation, not the reason for it? And if so, who is the stakeholder you need to get on board?'),h('span',{className:'project-number'},'02')),h('img',{className:'roof-card-image',src:'./Blog2/assets/slate-roof-hero.webp',alt:'Slate roofing tiles with loose overlapping slate samples',loading:'lazy'}),h('h3',null,'BUILT IN'),h('small',null,'RESILIENCE / MATERIAL CHOICE')),
- h('article',{className:'project project-three'},h('h3',null,'FORMA',h('br'),'ET MATERIA'),h('div',{className:'empty-space','aria-hidden':true}),h('div',{className:'project-heading'},h('p',null,latin),h('span',{className:'project-number'},'03')),h('small',null,'Consectetur / Adipiscing')),
- h('article',{className:'project project-four'},h('div',{className:'project-heading'},h('span',{className:'project-number'},'04'),h('p',null,latin)),h('div',{className:'empty-space','aria-hidden':true}),h('h3',null,'TEMPUS',h('br'),'FUTURUM'),h('small',null,'Ut enim / Ad minim'))
- ));}
+
+// Project filters. Add a topic here, then list its key in each project's `topics`.
+const topics=[
+ {key:'all',label:'All'},
+ {key:'agriculture',label:'Agriculture'},
+ {key:'housing',label:'Housing'},
+ {key:'insurance',label:'Insurance'},
+ {key:'upcoming',label:'Upcoming'}
+];
+const projects=[
+ {id:'01',topics:['agriculture','insurance'],render:()=>h('article',{className:'project project-grown'},h('div',{className:'project-heading'},h('h3',null,'GROWN',h('br'),'TO DIE'),h('span',{className:'project-number'},'01')),h('img',{className:'cotton-image',src:'./cotton.png',alt:'Black line drawing of a cotton stem'}),h('p',null,'If you were told there was a 4% chance of survival you would be worried. But in some Texas counties that’s becoming the norm for entire fields of crops. An analysis of Texas cotton and an insurance system unincentivizing adaptation.'),h('small',null,'Research / Texas cotton'))},
+ {id:'02',topics:['housing','insurance'],render:()=>h('a',{className:'project project-two project-built-in',href:'./Blog2.html#blog-top','aria-label':'Blog 2: Built In — resilience and material choice'},h('div',{className:'project-heading'},h('p',null,'Can you make resilience part of the renovation, not the reason for it? And if so, who is the stakeholder you need to get on board?'),h('span',{className:'project-number'},'02')),h('img',{className:'roof-card-image',src:'./Blog2/assets/slate-roof-hero.webp',alt:'Slate roofing tiles with loose overlapping slate samples',loading:'lazy'}),h('h3',null,'BUILT IN'),h('small',null,'RESILIENCE / MATERIAL CHOICE'))},
+ {id:'03',topics:['upcoming'],render:()=>h('article',{className:'project project-three'},h('h3',null,'FORMA',h('br'),'ET MATERIA'),h('div',{className:'empty-space','aria-hidden':true}),h('div',{className:'project-heading'},h('p',null,latin),h('span',{className:'project-number'},'03')),h('small',null,'Consectetur / Adipiscing'))},
+ {id:'04',topics:['upcoming'],render:()=>h('article',{className:'project project-four'},h('div',{className:'project-heading'},h('span',{className:'project-number'},'04'),h('p',null,latin)),h('div',{className:'empty-space','aria-hidden':true}),h('h3',null,'TEMPUS',h('br'),'FUTURUM'),h('small',null,'Ut enim / Ad minim'))}
+];
+const count=key=>key==='all'?projects.length:projects.filter(p=>p.topics.includes(key)).length;
+const pad=n=>String(n).padStart(2,'0');
+
+function Projects(){
+ const [topic,setTopic]=useState('all');
+ const shown=projects.filter(p=>topic==='all'||p.topics.includes(topic));
+ return h('section',{className:'projects',id:'projects','aria-labelledby':'projects-title'},
+ h('div',{className:'projects-label'},
+  h('h2',{id:'projects-title'},'Selected projects'),
+  h('div',{className:'project-filters',role:'group','aria-label':'Filter projects by topic'},
+   ...topics.map(t=>h('button',{key:t.key,type:'button',className:'project-filter','aria-pressed':topic===t.key,onClick:()=>setTopic(t.key)},t.label,h('span',{className:'project-filter-count'},count(t.key))))),
+  h('span',{className:'projects-count','aria-live':'polite'},topic==='all'?`01 — ${pad(projects.length)}`:`${pad(shown.length)} of ${pad(projects.length)}`)),
+ h('div',{className:'project-grid'+(topic==='all'?'':' is-filtered')},...shown.map(p=>h(React.Fragment,{key:p.id},p.render()))));
+}
 
 
 function Footer(){return h('footer',{className:'site-footer',id:'footer'},
  h('p',{className:'footer-copyright'},'© Harvard MDE Undercurrents 2026'),
  h('nav',{'aria-label':'Footer navigation',className:'footer-navigation'},
-  h('a',{href:'#home'},'Us'),
-  h('a',{href:'./who-we-are-talking-to.html'},'Network'),
-  h('a',{href:'#projects'},'Portfolio')));}
+  h('a',{href:'#home'},'Home'),
+  h('a',{href:'#projects'},'Projects'),
+  h('a',{href:'./who-we-are-talking-to.html'},'Network')));}
 
 function App(){
  useEffect(()=>{if(location.hash==='#projects'){requestAnimationFrame(()=>document.getElementById('projects')?.scrollIntoView({behavior:'instant',block:'start'}))}},[]);
- const [progress,setProgress]=useState(0),[open,setOpen]=useState(false),[solidHeader,setSolidHeader]=useState(false);
- useEffect(()=>{let frame;const update=()=>{cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{setProgress(Math.min(1,Math.max(0,window.scrollY/(window.innerHeight*2.85))));const hero=document.querySelector('.scroll-stage'),footer=document.querySelector('.site-footer');const headerBottom=76;setSolidHeader(!!hero&&hero.getBoundingClientRect().bottom<=headerBottom&&(!footer||footer.getBoundingClientRect().top>headerBottom))})};update();window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);return()=>{cancelAnimationFrame(frame);window.removeEventListener('scroll',update);window.removeEventListener('resize',update)}},[]);
- useEffect(()=>{document.body.style.overflow=open?'hidden':'';const close=e=>{if(e.key==='Escape')setOpen(false)};window.addEventListener('keydown',close);return()=>window.removeEventListener('keydown',close)},[open]);
+ const [progress,setProgress]=useState(0);
+ // The site header (assets/site-header.js) handles its own overlay/solid state.
+ useEffect(()=>{let frame;const update=()=>{cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>setProgress(Math.min(1,Math.max(0,window.scrollY/(window.innerHeight*2.85)))))};update();window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);return()=>{cancelAnimationFrame(frame);window.removeEventListener('scroll',update);window.removeEventListener('resize',update)}},[]);
  return h(React.Fragment,null,
- h('header',{className:solidHeader?'page-header-solid':''},h('a',{href:'#',className:'logo','aria-label':'UC home'},'UC'),h('button',{className:'menu-button'+(open?' active':''),'aria-label':open?'Close menu':'Open menu','aria-expanded':open,'aria-controls':'navigation',onClick:()=>setOpen(!open)},...[1,2,3].map(i=>h('span',{key:i})))),
- open&&h('nav',{id:'navigation',className:'overlay','aria-label':'Main navigation'},h('a',{href:'#home',onClick:()=>setOpen(false)},'UNDERCURRENTS'),h('a',{href:'#projects',onClick:()=>setOpen(false)},'PROJECTS'),h('small',null,'SUS / undercurrents')),
  h('main',null,h('section',{className:'scroll-stage',id:'home'},h('div',{className:'hero',style:{'--progress':progress,'--reveal':Math.min(1,Math.max(0,(progress-.12)*3))}},
  h('video',{className:'hero-video',src:'./desert.mp4',autoPlay:true,muted:true,loop:true,playsInline:true,preload:'auto','aria-hidden':true}),h('div',{className:'video-wash','aria-hidden':true}),
  h('svg',{width:0,height:0,'aria-hidden':true,style:{position:'absolute'}},

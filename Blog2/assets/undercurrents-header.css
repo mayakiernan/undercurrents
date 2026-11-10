@@ -1,10 +1,3 @@
-
-/* Shared Undercurrents interior banner and article typography. */
-.uc-blog-banner{position:fixed;inset:10px 10px auto;z-index:1000;display:flex;align-items:center;justify-content:space-between;min-height:65px;padding:16px 25px;background:#fff;color:#171815;border:2px solid #000;border-bottom:0}
-.uc-blog-logo{font-family:Inter,Arial,sans-serif;font-size:27px;font-weight:600;letter-spacing:-3px;line-height:1;transform:scaleX(1.1);text-decoration:none;color:inherit}
-.uc-blog-menu{width:36px;height:32px;border:0;background:none;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:3px;color:inherit;cursor:pointer}
-.uc-blog-menu span{display:block;width:30px;height:1px;background:currentColor}
-.uc-blog-nav{position:fixed;inset:76px 10px auto;z-index:999;background:#fff;padding:26px;display:flex;flex-direction:column;align-items:flex-end;gap:22px;border:1px solid #0000002e}
-.uc-blog-nav[hidden]{display:none}.uc-blog-nav a{font:14px Inter,Arial,sans-serif;text-transform:uppercase;letter-spacing:.12em;text-decoration:none;color:#000}
+/* Blog 2 article spacing under the shared site header (../../assets/site-header.css). */
 .editorial-hero{padding-top:135px}.editorial-heading h1{font-size:clamp(30px,3.1vw,46px);letter-spacing:-1.3px;max-width:1000px}
-@media(max-width:650px){.uc-blog-banner{min-height:58px;padding:12px 18px}.uc-blog-nav{top:69px}.editorial-hero{padding-top:115px}.editorial-heading h1{font-size:30px;letter-spacing:-.9px}}
+@media(max-width:650px){.editorial-hero{padding-top:115px}.editorial-heading h1{font-size:30px;letter-spacing:-.9px}}
