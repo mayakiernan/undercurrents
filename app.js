@@ -1,10 +1,14 @@
 import React, {useEffect,useState} from 'https://esm.sh/react@19.0.0';
 import {createRoot} from 'https://esm.sh/react-dom@19.0.0/client';
+import {POLICY} from './Blog4/data.js?v=1';
 const h=React.createElement;
 const phrase='of the future to come';
 function Handwriting(){return h('span',{'aria-label':phrase},...Array.from(phrase).map((letter,i)=>h('span',{key:i,className:'hand-letter','aria-hidden':true,style:{'--i':i}},letter===' '?'\u00a0':letter)));}
 
-const latin='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
+// Blog 04 card: a tile-grid U.S. map colored from Blog4/data.js ([row, col] per state).
+const TILES={AK:[0,0],ME:[0,10],VT:[1,9],NH:[1,10],WA:[2,0],ID:[2,1],MT:[2,2],ND:[2,3],MN:[2,4],IL:[2,5],WI:[2,6],MI:[2,7],NY:[2,8],RI:[2,9],MA:[2,10],OR:[3,0],NV:[3,1],WY:[3,2],SD:[3,3],IA:[3,4],IN:[3,5],OH:[3,6],PA:[3,7],NJ:[3,8],CT:[3,9],CA:[4,0],UT:[4,1],CO:[4,2],NE:[4,3],MO:[4,4],KY:[4,5],WV:[4,6],VA:[4,7],MD:[4,8],DE:[4,9],AZ:[5,1],NM:[5,2],KS:[5,3],AR:[5,4],TN:[5,5],NC:[5,6],SC:[5,7],DC:[5,8],OK:[6,3],LA:[6,4],MS:[6,5],AL:[6,6],GA:[6,7],HI:[7,0],TX:[7,3],FL:[7,8]};
+function tileFill(ab){const p=POLICY[ab]||{},d=Object.values(p.discount||{}).includes('required'),pc=p.pace==='res'||p.pace==='active';return d&&pc?'#eb6834':d?'#2a78d6':pc?'#1baf7a':'#ecebe6'}
+function TileMap(){return h('svg',{className:'tile-map',viewBox:'0 0 264 192','aria-hidden':true},...Object.entries(TILES).map(([ab,[r,c]])=>h('g',{key:ab},h('rect',{x:c*24+1,y:r*24+1,width:22,height:22,rx:2,fill:tileFill(ab)}),h('text',{x:c*24+12,y:r*24+12.5,fill:tileFill(ab)==='#ecebe6'?'#8a8984':'#fff',fontSize:7,fontWeight:600,textAnchor:'middle',dominantBaseline:'central',fontFamily:'Inter,Arial,sans-serif'},ab))))}
 
 // Project filters. Add a topic here, then list its key in each project's `topics`.
 const topics=[
@@ -12,13 +16,13 @@ const topics=[
  {key:'agriculture',label:'Agriculture'},
  {key:'housing',label:'Housing'},
  {key:'insurance',label:'Insurance'},
- {key:'upcoming',label:'Upcoming'}
+ {key:'policy',label:'Policy'}
 ];
 const projects=[
  {id:'01',topics:['agriculture','insurance'],render:()=>h('article',{className:'project project-grown'},h('div',{className:'project-heading'},h('h3',null,'GROWN',h('br'),'TO DIE'),h('span',{className:'project-number'},'01')),h('img',{className:'cotton-image',src:'./cotton.png',alt:'Black line drawing of a cotton stem'}),h('p',null,'If you were told there was a 4% chance of survival you would be worried. But in some Texas counties that’s becoming the norm for entire fields of crops. An analysis of Texas cotton and an insurance system unincentivizing adaptation.'),h('small',null,'Research / Texas cotton'))},
  {id:'02',topics:['housing','insurance'],render:()=>h('a',{className:'project project-two project-built-in',href:'./Blog2.html#blog-top','aria-label':'Blog 2: Built In — resilience and material choice'},h('div',{className:'project-heading'},h('p',null,'Can you make resilience part of the renovation, not the reason for it? And if so, who is the stakeholder you need to get on board?'),h('span',{className:'project-number'},'02')),h('img',{className:'roof-card-image',src:'./Blog2/assets/slate-roof-hero.webp',alt:'Slate roofing tiles with loose overlapping slate samples',loading:'lazy'}),h('h3',null,'BUILT IN'),h('small',null,'RESILIENCE / MATERIAL CHOICE'))},
  {id:'03',topics:['insurance'],render:()=>h('a',{className:'project project-three project-annual-bet',href:'./Blog3.html#blog-top','aria-label':'Blog 3: The Annual Bet — insurance, loss and hail'},h('h3',null,'THE ANNUAL',h('br'),'BET'),h('svg',{className:'hail-graphic',viewBox:'0 0 240 150','aria-hidden':true},...Array.from({length:60},(_,i)=>{const c=i%12,r=Math.floor(i/12),k=Math.abs(Math.sin(i*12.9898)*43758.5453)%1;return h('circle',{key:i,cx:10+c*20,cy:15+r*30,r:1.5+k*k*7,fill:k>.82?'#000':'none',stroke:'#000',strokeWidth:.8})})),h('div',{className:'project-heading'},h('p',null,'Insurance is sold one year at a time; roofs, warehouses and solar farms last decades. A plain-language map of where risk is carried, what drives U.S. losses, and why hail keeps breaking the bank.'),h('span',{className:'project-number'},'03')),h('small',null,'Insurance / Loss / Hail'))},
- {id:'04',topics:['upcoming'],render:()=>h('article',{className:'project project-four'},h('div',{className:'project-heading'},h('span',{className:'project-number'},'04'),h('p',null,latin)),h('div',{className:'empty-space','aria-hidden':true}),h('h3',null,'TEMPUS',h('br'),'FUTURUM'),h('small',null,'Ut enim / Ad minim'))}
+ {id:'04',topics:['housing','insurance','policy'],render:()=>h('a',{className:'project project-four project-paid',href:'./Blog4.html#blog-top','aria-label':'Blog 4: Paid to Prepare — a map of mitigation-discount laws and PACE financing'},h('div',{className:'project-heading'},h('span',{className:'project-number'},'04'),h('p',null,'Which states make insurers discount your premium for a stronger roof, which are about to, and where PACE financing pays for the upgrade up front. A filterable map of all 50 states.')),h(TileMap),h('h3',null,'PAID TO',h('br'),'PREPARE'),h('small',null,'Policy / Insurance / PACE'))}
 ];
 const count=key=>key==='all'?projects.length:projects.filter(p=>p.topics.includes(key)).length;
 const pad=n=>String(n).padStart(2,'0');

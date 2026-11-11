@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>Paid to Prepare — Undercurrents</title>
+<meta name="description" content="A filterable map of every U.S. state that requires insurers to discount premiums for storm and wildfire mitigation, the states with a policy in the works, and where PACE financing can pay for the upgrade.">
+<link rel="icon" href="./favicon.ico" sizes="32x32">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="./Blog4/map.css?v=1">
+<link rel="stylesheet" href="./assets/site-header.css">
+</head>
+<body id="blog-top">
+<header class="cover">
+  <p class="cover-kicker"><span>04</span><span>Policy / Finance</span><time datetime="2026-11-11">Nov. 11, 2026</time></p>
+  <h1>PAID TO<br>PREPARE</h1>
+  <p class="cover-sub">Which states make insurers knock money off your premium for a stronger roof, which are about to, and where PACE financing can cover the upgrade up front.</p>
+  <a class="cover-cue" href="#map-section">Jump to the map<b aria-hidden="true">↓</b></a>
+</header>
+
+<article class="intro">
+  <p class="lead">A FORTIFIED roof, ember-proof vents or hurricane shutters cost money today and pay off on a bad day years from now. Two kinds of policy try to close that gap.</p>
+  <div class="intro-cols">
+    <div>
+      <h2><span>01</span>Mitigation discounts</h2>
+      <p>A handful of states <b>require</b> insurers to cut the premium when a home is built or retrofitted to a recognized standard, usually IBHS FORTIFIED for wind and hail, or a state list of wildfire hardening steps. Elsewhere, discounts are up to each carrier, and they can be small or missing.</p>
+    </div>
+    <div>
+      <h2><span>02</span>PACE financing</h2>
+      <p><b>Property Assessed Clean Energy</b> loans pay for upgrades up front and are repaid through the property-tax bill over as long as 20 or 30 years. Most states allow it for commercial buildings (C-PACE). Only California and Florida still run it for homes, and a growing number count storm resilience as eligible.</p>
+    </div>
+    <div>
+      <h2><span>03</span>Where they meet</h2>
+      <p>A discount lowers the yearly cost of insurance; PACE removes the upfront cost of the work. Where a state has both, the upgrade can start paying for itself in the first year. Switch the map to <b>Both</b> to see how few states that is.</p>
+    </div>
+  </div>
+</article>
+
+<section class="map-section" id="map-section" aria-labelledby="map-title">
+  <div class="controls">
+    <div class="view-tabs" role="tablist" aria-label="Map layer">
+      <button class="view-tab" role="tab" type="button" data-view="discount">Mitigation discounts</button>
+      <button class="view-tab" role="tab" type="button" data-view="pace">PACE financing</button>
+      <button class="view-tab" role="tab" type="button" data-view="overlap">Both</button>
+    </div>
+    <div class="filter-group" id="hazard-group" role="group" aria-label="Filter by hazard">
+      <span class="filter-label">Hazard</span>
+      <button type="button" data-hazard="all">All</button>
+      <button type="button" data-hazard="wind">Wind &amp; hurricane</button>
+      <button type="button" data-hazard="hail">Hail</button>
+      <button type="button" data-hazard="wildfire">Wildfire</button>
+    </div>
+    <div class="filter-group" id="resil-group" role="group" aria-label="PACE filter" hidden>
+      <span class="filter-label">Filter</span>
+      <button type="button" id="resil-toggle">Resilience upgrades eligible</button>
+    </div>
+  </div>
+
+  <div class="map-layout">
+    <div class="map-frame">
+      <div class="map-head">
+        <h2 id="map-title">Mitigation discounts</h2>
+        <span id="map-count" aria-live="polite"></span>
+      </div>
+      <svg id="us-map" viewBox="0 0 990 610" role="group" aria-label="Map of U.S. states. Each state is a button; select one for details."></svg>
+      <div class="legend" id="legend" role="group" aria-label="Legend. Click a category to show or hide it."></div>
+      <div class="map-tip" id="map-tip" role="tooltip" hidden></div>
+    </div>
+    <aside class="detail" id="detail" aria-live="polite" aria-label="State details"></aside>
+  </div>
+</section>
+
+<section class="table-section" aria-labelledby="table-title">
+  <div class="table-head">
+    <h2 id="table-title">Every state, in one list</h2>
+    <div class="table-tools">
+      <label class="search"><span class="visually-hidden">Search states</span><input id="table-search" type="search" placeholder="Search a state" autocomplete="off"></label>
+      <label class="check-toggle"><input id="table-shown" type="checkbox"> Only states shown on the map</label>
+      <span id="table-count" aria-live="polite"></span>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th scope="col">State</th><th scope="col">Mitigation discount</th><th scope="col">PACE</th><th scope="col">The policy</th></tr></thead>
+      <tbody id="policy-rows"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="colophon" aria-label="Sources">
+  <h2>Notes &amp; sources</h2>
+  <p><b>This is a research snapshot as of November 2026,</b> written for a general reader, not legal advice. State insurance rules change every session, and PACE programs launch and pause often. Where sources disagree, the state's detail panel says so. Check with the state insurance department or PACENation before acting on any one entry.</p>
+  <p>“Required” means a statute or regulation obliges insurers to give a discount or rate reduction for qualifying mitigation. Most of these laws let insurers set the size of the discount from their own data; Louisiana and Minnesota now publish benchmark levels. “In the works / partial” covers pending bills, rules not yet in force, regulators’ directives, and states whose status sources dispute. PACE counts for operating programs vary by tracker (32 to 36 states plus D.C. in 2026); “Law passed, not yet running” marks states with an enabling law but no active program.</p>
+  <ul id="source-list"></ul>
+  <p><a href="./Blog3.html">Read Blog 03: The Annual Bet, on insurance and hail →</a></p>
+</section>
+
+<footer class="site-footer" id="footer">
+  <p class="footer-copyright">© Harvard MDE Undercurrents 2026</p>
+  <nav aria-label="Footer navigation" class="footer-navigation">
+    <a href="./index.html#home">Home</a>
+    <a href="./index.html#projects">Projects</a>
+    <a href="./who-we-are-talking-to.html">Network</a>
+  </nav>
+</footer>
+
+<noscript><p class="noscript">The map needs JavaScript. The sources below list every policy.</p></noscript>
+<script type="module" src="./Blog4/map.js?v=1"></script>
+<script src="./assets/site-header.js" defer></script>
+</body>
+</html>
