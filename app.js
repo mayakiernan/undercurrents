@@ -45,7 +45,8 @@ function Footer(){return h('footer',{className:'site-footer',id:'footer'},
  h('nav',{'aria-label':'Footer navigation',className:'footer-navigation'},
   h('a',{href:'#home'},'Home'),
   h('a',{href:'#projects'},'Projects'),
-  h('a',{href:'./who-we-are-talking-to.html'},'Network')));}
+  h('a',{href:'./who-we-are-talking-to.html'},'Network'),
+  h('a',{href:'./about.html'},'About')));}
 
 function App(){
  useEffect(()=>{if(location.hash==='#projects'){requestAnimationFrame(()=>document.getElementById('projects')?.scrollIntoView({behavior:'instant',block:'start'}))}},[]);
@@ -70,3 +71,4 @@ function App(){
  h(Projects)),h(Footer));
 }
 createRoot(document.getElementById('root')).render(h(App));
+

@@ -10,13 +10,15 @@
  const links=[
   {key:'home',label:'Home',href:url('index.html#home')},
   {key:'projects',label:'Projects',href:url('index.html#projects')},
-  {key:'network',label:'Network',href:url('who-we-are-talking-to.html')}
+  {key:'network',label:'Network',href:url('who-we-are-talking-to.html')},
+  {key:'about',label:'About',href:url('about.html')}
  ];
 
  const page=location.pathname.replace(/\/+$/,'/index.html');
  const isHome=/\/index\.html$/.test(page)&&!/\/Blog2\//.test(page);
  const isNetwork=/who-we-are-talking-to\.html$/.test(page);
- const isBlog=!isHome&&!isNetwork;
+ const isAbout=/\/about\.html$/.test(page);
+ const isBlog=!isHome&&!isNetwork&&!isAbout;
 
  const header=document.createElement('div');
  header.className='uc-header';header.setAttribute('role','banner');
@@ -31,7 +33,7 @@
 
  const nav=header.querySelector('nav'),button=header.querySelector('button');
  function setCurrent(key){nav.querySelectorAll('a').forEach(a=>{if(a.dataset.key===key)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')})}
- setCurrent(isNetwork?'network':isBlog?'projects':'home');
+ setCurrent(isAbout?'about':isNetwork?'network':isBlog?'projects':'home');
 
  function setMenu(open){nav.classList.toggle('is-open',open);button.setAttribute('aria-expanded',String(open));button.setAttribute('aria-label',open?'Close menu':'Open menu');update()}
  button.addEventListener('click',()=>setMenu(!nav.classList.contains('is-open')));
@@ -59,3 +61,4 @@
  }
  if(overlay||isHome){update();addEventListener('scroll',update,{passive:true});addEventListener('resize',update);addEventListener('load',update)}
 })();
+
